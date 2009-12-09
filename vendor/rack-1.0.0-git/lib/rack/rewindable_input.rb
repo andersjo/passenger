@@ -74,7 +74,7 @@ module Rack
       @rewindable_io.chmod(0000)
       @rewindable_io.set_encoding(Encoding::BINARY) if @rewindable_io.respond_to?(:set_encoding)
       @rewindable_io.binmode
-      if filesystem_has_posix_semantics?
+      if filesystem_has_posix_semantics? && "#{RUBY_VERSION}.#{RUBY_PATCHLEVEL}" < "1.9.1.152"
         @rewindable_io.unlink
         @unlinked = true
       end
